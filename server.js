@@ -1,4 +1,5 @@
 const express = require('express'); //Imports Express.js
+const pgRouter = require('./database/postgres.js')
 //const helmet = require('helmet');
 //const cors = require('cors');
 //const morgan = require('morgan');
@@ -17,9 +18,12 @@ app.use(morgan('dev'));
 */
 
 //  Routes
+
 app.get('/', (req, res) => {
     res.send('<h1>NC Voter Search</h1>');
 });
+
+app.use('/pg', pgRouter)
 
 app.get('/api/health', (req, res) => {
     res.json({ uptime: process.uptime(), message: 'OK', timestamp: Date.now() });
