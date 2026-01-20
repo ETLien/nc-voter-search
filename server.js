@@ -30,7 +30,35 @@ app.get('/api/health', (req, res) => {
     res.json({ uptime: process.uptime(), message: 'OK', timestamp: Date.now() });
 });
 
+app.get('/api/countylist', (req, res) => {
+    
+});
+
+app.get('/api/citylist', (req, res) => {
+    const { county } = req.query;
+
+    //optionally, use the county parameter to filter cities by county
+    
+});
+
 app.get('/api/search', (req, res) => {
+
+    const { firstname, firstnameExact, middlename, middlenameExact, lastname, lastnameExact, address, phone, city, county, zip } = req.query;
+
+    console.log(`Search parameters received:
+        First Name: ${firstname}
+        Exact? ${firstnameExact}
+        Middle Name: ${middlename}
+        Exact? ${middlenameExact}
+        Last Name: ${lastname}
+        Exact? ${lastnameExact}
+        Address: ${address}
+        Phone: ${phone}
+        City: ${city}
+        County: ${county}
+        Zip: ${zip}
+    `);
+
     res.json(
     [
         {
