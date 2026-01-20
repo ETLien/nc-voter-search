@@ -8,6 +8,7 @@ const express = require('express'); //Imports Express.js
 const app = express(); //Creates an Express application
 
 // Middleware recommended by Copilot, let's see if we need these
+app.use(express.json());
 /*
 app.use(helmet());
 app.use(cors());
@@ -17,15 +18,38 @@ app.use(morgan('dev'));
 
 //  Routes
 app.get('/', (req, res) => {
-    res.send('<h1>Welcome to the Express.js Server</h1>');
+    res.send('<h1>NC Voter Search</h1>');
 });
 
 app.get('/api/health', (req, res) => {
     res.json({ uptime: process.uptime(), message: 'OK', timestamp: Date.now() });
 });
 
-app.get('/api/example', (req, res) => {
-    res.json({ hello: 'world' });
+app.get('/api/search', (req, res) => {
+    res.json(
+    [
+        {
+            firstname: 'Johannes',
+            middlename: 'Jett',
+            lastname: 'Svart',
+            address: 'XXXX MaiXXX StXXX',
+            city: 'Raleigh',
+            county: 'Wake',
+            zip: '27606',
+            phone: 'XXX-XXX-4567'
+        },
+        {
+            firstname: 'Jaime',
+            middlename: 'Delgado',
+            lastname: 'Guzman',
+            address: 'XXXX SteXXX RoXXX',
+            city: 'Raleigh',
+            county: 'Wake',
+            zip: '27606',
+            phone: 'XXX-XXX-7890'
+        }
+    ]
+    );
 });
 
 // 404 handler
