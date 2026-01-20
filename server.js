@@ -1,10 +1,11 @@
+// Load dependencies
 const express = require('express'); //Imports Express.js
+require('dotenv').config(); //Loads environment variables from a .env file
+const helmet = require('helmet'); //sets various HTTP headers for app security
+const cors = require('cors'); //enables Cross-Origin Resource Sharing
+//const morgan = require('morgan'); //HTTP request logger middleware - we can add if we feel we need it
 const pgRouter = require('./database/postgres.js')
-//const helmet = require('helmet');
-//const cors = require('cors');
-//const morgan = require('morgan');
 
-//require('dotenv').config(); //Loads environment variables from a .env file if we need this. May be useful for local testing vs server.
 
 const app = express(); //Creates an Express application
 
@@ -17,13 +18,13 @@ app.use(express.json());
 app.use(morgan('dev'));
 */
 
+
 //  Routes
 
+// Root/home page
 app.get('/', (req, res) => {
     res.send('<h1>NC Voter Search</h1>');
 });
-
-app.use('/pg', pgRouter)
 
 app.get('/api/health', (req, res) => {
     res.json({ uptime: process.uptime(), message: 'OK', timestamp: Date.now() });
@@ -65,8 +66,11 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
 });
 
-//const PORT = process.env.PORT || 3000;
-const PORT = 3000;
+// Mount the Postgres router
+app.use('/pg', pgRouter)
+
+// Start the server
+const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
@@ -86,4 +90,4 @@ const shutdown = () => {
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-//module.exports = app;
+//module.exports = app; //if we need to export for testing
