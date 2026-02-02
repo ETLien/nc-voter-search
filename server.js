@@ -1,13 +1,16 @@
 // Load dependencies
+require('dotenv').config({path: './envs/.env.local'}); //Loads environment variables from a .env file
 const express = require('express'); //Imports Express.js
-require('dotenv').config(); //Loads environment variables from a .env file
 const helmet = require('helmet'); //sets various HTTP headers for app security
 const cors = require('cors'); //enables Cross-Origin Resource Sharing
 //const morgan = require('morgan'); //HTTP request logger middleware - we can add if we feel we need it
-const pgRouter = require('./database/postgres.js')
-
 
 const app = express(); //Creates an Express application
+
+const pgPool = require('./database/index.js') //Import Postgres connection
+
+
+
 
 // Middleware recommended by Copilot, let's see if we need these
 app.use(express.json());
@@ -17,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 */
+
 
 
 //  Routes
@@ -41,49 +45,96 @@ app.get('/api/citylist', (req, res) => {
     
 });
 
-app.get('/api/search', (req, res) => {
+app.get('/api/search', async (req, res) => {
+    try{
+        const { firstname, firstnameExact, middlename, middlenameExact, lastname, lastnameExact, address, phone, city, county, zip } = req.query;
 
-    const { firstname, firstnameExact, middlename, middlenameExact, lastname, lastnameExact, address, phone, city, county, zip } = req.query;
+        console.log(`Search parameters received:
+            First Name: ${firstname}
+            Exact? ${firstnameExact}
+            Middle Name: ${middlename}
+            Exact? ${middlenameExact}
+            Last Name: ${lastname}
+            Exact? ${lastnameExact}
+            Address: ${address}
+            Phone: ${phone}
+            City: ${city}
+            County: ${county}
+            Zip: ${zip}
+        `);
 
-    console.log(`Search parameters received:
-        First Name: ${firstname}
-        Exact? ${firstnameExact}
-        Middle Name: ${middlename}
-        Exact? ${middlenameExact}
-        Last Name: ${lastname}
-        Exact? ${lastnameExact}
-        Address: ${address}
-        Phone: ${phone}
-        City: ${city}
-        County: ${county}
-        Zip: ${zip}
-    `);
 
-    res.json(
-    [
-        {
-            firstname: 'Johannes',
-            middlename: 'Jett',
-            lastname: 'Svart',
-            address: 'XXXX MaiXXX StXXX',
-            city: 'Raleigh',
-            county: 'Wake',
-            zip: '27606',
-            phone: 'XXX-XXX-4567'
-        },
-        {
-            firstname: 'Jaime',
-            middlename: 'Delgado',
-            lastname: 'Guzman',
-            address: 'XXXX SteXXX RoXXX',
-            city: 'Raleigh',
-            county: 'Wake',
-            zip: '27606',
-            phone: 'XXX-XXX-7890'
+
+        const query = "SELECT COUNT(*) as nc_vreg_history_count FROM public.nc_vreg_history";
+
+        console.log("Executing query:", query);
+
+        const { rows } = await pgPool.query(query);
+        res.json(rows);
+
+        /*
+        // Example of SELECT query from database
+        app.get("/expenses", async (req, res) => {
+        try {
+            const query = "SELECT * FROM expenses"
+            const { rows } = await pool.query(query)
+            res.json(rows)
+        } catch (err) {
+            console.error(err)
+            res.status(500).json({ error: "Internal server error" })
         }
-    ]
-    );
+        })
+        */
+
+
+        res.json(
+        [
+            {
+                firstname: 'Johannes',
+                middlename: 'Jett',
+                lastname: 'Svart',
+                address: 'XXXX MaiXXX StXXX',
+                city: 'Raleigh',
+                county: 'Wake',
+                zip: '27606',
+                phone: 'XXX-XXX-4567'
+            },
+            {
+                firstname: 'Jaime',
+                middlename: 'Delgado',
+                lastname: 'Guzman',
+                address: 'XXXX SteXXX RoXXX',
+                city: 'Raleigh',
+                county: 'Wake',
+                zip: '27606',
+                phone: 'XXX-XXX-7890'
+            }
+        ]
+        );
+
+    }
+    catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Internal server error" })
+  }
 });
+
+
+app.get("/test", async (req, res) => {
+  try {
+    const query = "SELECT COUNT(*) as nc_vreg_history_count FROM public.nc_vreg_history";
+
+    console.log("Executing query:", query);
+
+    const { rows } = await pgPool.query(query)
+    res.json(rows)
+  }
+  catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Internal server error" })
+  } 
+});
+
 
 // 404 handler
 app.use((req, res) => res.status(404).json({ error: 'Not Found' }));
@@ -94,13 +145,24 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
 });
 
-// Mount the Postgres router
-app.use('/pg', pgRouter)
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
+
+    //console.log('PG Connection String:', process.env.PG_CONNECTION_STRING); // Log the connection string for debugging
+    //console.log("pgPool");
+    //console.log(pgPool);
+
+    //test connection
+    pgPool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('Database connection error:', err);
+    } else {
+        console.log('Connected to PostgreSQL database!');
+    }
+    });
 });
 
 // Graceful shutdown

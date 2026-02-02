@@ -1,9 +1,8 @@
 const express = require("express")
+const { Pool } = require("pg")
+
 const router = express.Router()
 
-module.exports = router
-
-const { Pool } = require("pg")
 
 // Create a new pool for handling database connections
 // using variables
@@ -23,6 +22,24 @@ const pool = new Pool({
   ssl: true
 })
 
+router.get("/test", async (req, res) => {
+
+  res.send('<h1>TEST</h1>');
+
+  /*
+  try {
+    const query = "SELECT COUNT() as nc_vreg_history_count FROM public.nc_vreg_history";
+
+    console.log("Executing query:", query);
+
+    const { rows } = await pool.query(query)
+    res.json(rows)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Internal server error" })
+  }
+    */
+})
 
 /*
 // Example of SELECT query from database
@@ -37,3 +54,6 @@ router.get("/expenses", async (req, res) => {
   }
 })
 */
+
+
+module.exports = router
