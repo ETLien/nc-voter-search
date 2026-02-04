@@ -141,23 +141,92 @@ app.get('/api/search', async (req, res) => {
     }
     else {
         try{
+            
+            let queryParts = {
+                cityQuery:"",
+                countyQuery:"",
+                zipQuery:"",
+                firstnameQuery:"",
+                middlenameQuery:"",
+                lastnameQuery:"",
+                phoneQuery:"",
+                addressQuery:""
+            };
+
+            if(firstname == undefined || firstname == ""){                
+                if(firstnameExact=="true"){
+                    queryParts.firstnameQuery = "first_name = '${firstname}'";
+                }
+                else {
+                    queryParts.firstnameQuery = "first_name LIKE '%${firstname}%'";
+                }                
+            }
+            
+            if(middlename == undefined || middlename == ""){
+                if(middlenameExact=="true"){
+                    queryParts.middlenameQuery = "";
+                }
+                else {
+                    queryParts.middlenameQuery = "";
+                }  
+            }
+                
+            if(lastname == undefined || lastname == ""){
+                if(lastnameExact=="true"){
+                    queryParts.lastnameeQuery = "";
+                }
+                else {
+                    queryParts.lastnameQuery = "";
+                }  
+            }
+            
+            if(phone == undefined || phone == ""){
+                queryParts.phoneQuery = "";
+            }
+            
+            if(address == undefined || address == ""){
+                queryParts.addressQuery = "";
+            }
+
+            if(city != undefined && city != ""){
+                queryParts.cityQuery = "";
+            }
+        
+            if(county == undefined || county == ""){
+                queryParts.countyQuery = "";
+            }
+                
+            if(zip == undefined || zip == ""){
+                queryParts.zipQuery = "";
+            }
 
 
+            let query = "SELECT * FROM public.nc_vreg_history WHERE ";
 
 
+            for(part in queryParts){
+                if(part != undefined){
+                    query += " AND ";
+                }
+            }
+            
 
+            //query = "SELECT * FROM public.nc_vreg_history WHERE last_name IN ('Mitchell')";
 
+            query = "SELECT COUNT(DISTINCT last_name) FROM public.nc_vreg_history";
 
-
-            const query = "SELECT COUNT(*) as nc_vreg_history_count FROM public.nc_vreg_history";
 
             console.log("Executing query:", query);
 
+            
             const { rows } = await pgPool.query(query);
+
+            console.log("Query done, received "+rows.length+" results");
+
             res.json(rows);
+            
 
-
-
+            /*
             res.json(
             [
                 {
@@ -182,6 +251,7 @@ app.get('/api/search', async (req, res) => {
                 }
             ]
             );
+            */
 
         }
         catch (err) {
