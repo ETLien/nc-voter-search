@@ -1,0 +1,4 @@
+.adjacent-tables {
+    display: flex;
+    column-gap: 4em;
+}

@@ -1,0 +1,8 @@
+.searchform {
+  max-width: 1200px;
+  margin: auto;
+}
+  
+.searchform > div {
+  display: flex;    
+}
