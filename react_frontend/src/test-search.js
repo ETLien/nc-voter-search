@@ -1,0 +1,470 @@
+const testData = [
+  {
+    "ncid": "AK194177",
+    "first_name": "KAIN",
+    "middle_name": "GABRIEL",
+    "last_name": "JACKSON",
+    "phone": "9105232187",
+    "address": "1061 BEAUFORT RD",
+    "city": "BOILING SPRING LAKES",
+    "county": "BRUNSWICK",
+    "zip_code": "28461"
+  },
+  {
+    "ncid": "AL247906",
+    "first_name": "KAIN",
+    "middle_name": "MICHAEL",
+    "last_name": "GALLOWAY",
+    "phone": "",
+    "address": "11 SPRING ST",
+    "city": "BLACK MOUNTAIN",
+    "county": "BUNCOMBE",
+    "zip_code": "28711"
+  },
+  {
+    "ncid": "AL398354",
+    "first_name": "KAIN",
+    "middle_name": "XAVIER",
+    "last_name": "BRAUNEIS",
+    "phone": "4066974611",
+    "address": "68 N FRENCH BROAD AVE #D1",
+    "city": "ASHEVILLE",
+    "county": "BUNCOMBE",
+    "zip_code": "28801"
+  },
+  {
+    "ncid": "AL399329",
+    "first_name": "KAIN",
+    "middle_name": "MICHAEL",
+    "last_name": "JUTRAS",
+    "phone": "4698104497",
+    "address": "686 MONTE VISTA RD",
+    "city": "CANDLER",
+    "county": "BUNCOMBE",
+    "zip_code": "28715"
+  },
+  {
+    "ncid": "AS111738",
+    "first_name": "KAIN",
+    "middle_name": "EDWARD",
+    "last_name": "THETFORD-PENNINGTON",
+    "phone": "",
+    "address": "133 WILDWOOD RD #526",
+    "city": "NEWPORT",
+    "county": "CARTERET",
+    "zip_code": "28570"
+  },
+  {
+    "ncid": "AW250400",
+    "first_name": "KAIN",
+    "middle_name": "XAVIER",
+    "last_name": "MORENO",
+    "phone": "",
+    "address": "1751 SHERWOOD CT",
+    "city": "SHERRILLS FORD",
+    "county": "CATAWBA",
+    "zip_code": "28673"
+  },
+  {
+    "ncid": "AX53351",
+    "first_name": "KAIN",
+    "middle_name": "SCOTT",
+    "last_name": "WHITAKER",
+    "phone": "9195425758",
+    "address": "497 MAY FARM RD",
+    "city": "PITTSBORO",
+    "county": "CHATHAM",
+    "zip_code": "27312"
+  },
+  {
+    "ncid": "AY50836",
+    "first_name": "KAIN",
+    "middle_name": "ALEXANDER",
+    "last_name": "JENKINS",
+    "phone": "8285577747",
+    "address": "205 TURKEY RIDGE DR",
+    "city": "MURPHY",
+    "county": "CHEROKEE",
+    "zip_code": "28906"
+  },
+  {
+    "ncid": "BB67110",
+    "first_name": "KAIN",
+    "middle_name": "",
+    "last_name": "ALI",
+    "phone": "",
+    "address": "2804 ED REID ST",
+    "city": "CHARLOTTE",
+    "county": "MECKLENBURG",
+    "zip_code": "28216"
+  },
+  {
+    "ncid": "BC80481",
+    "first_name": "KAIN",
+    "middle_name": "ASIL",
+    "last_name": "HORN TYREE",
+    "phone": "",
+    "address": "425 HILBURN RD",
+    "city": "WHITEVILLE",
+    "county": "COLUMBUS",
+    "zip_code": "28472"
+  },
+  {
+    "ncid": "BE364042",
+    "first_name": "KAIN",
+    "middle_name": "KORINTHIANS",
+    "last_name": "SIMMONS",
+    "phone": "9102862133",
+    "address": "2214 DELTA DR",
+    "city": "FAYETTEVILLE",
+    "county": "CUMBERLAND",
+    "zip_code": "28304"
+  },
+  {
+    "ncid": "BL561583",
+    "first_name": "KAIN",
+    "middle_name": "ALEXANDER",
+    "last_name": "PLACE-HILDESHEIM",
+    "phone": "4843000431",
+    "address": "530 FOSTER ST #512",
+    "city": "DURHAM",
+    "county": "DURHAM",
+    "zip_code": "27701"
+  },
+  {
+    "ncid": "BN490268",
+    "first_name": "KAIN",
+    "middle_name": "JOSEPH D'ANDRES",
+    "last_name": "GERENA",
+    "phone": "",
+    "address": "REMOVED",
+    "city": "",
+    "county": "FORSYTH",
+    "zip_code": ""
+  },
+  {
+    "ncid": "BN523864",
+    "first_name": "KAIN",
+    "middle_name": "B",
+    "last_name": "URGITUS",
+    "phone": "3365775981",
+    "address": "1 A ST #302",
+    "city": "CAMP LEJEUNE",
+    "county": "ONSLOW",
+    "zip_code": "28542"
+  },
+  {
+    "ncid": "BN563442",
+    "first_name": "KAIN",
+    "middle_name": "KNIGHT",
+    "last_name": "WALLACE",
+    "phone": "9142583457",
+    "address": "160 SARATOGA ST",
+    "city": "WINSTON SALEM",
+    "county": "FORSYTH",
+    "zip_code": "27103"
+  },
+  {
+    "ncid": "BR231573",
+    "first_name": "KAIN",
+    "middle_name": "VINCENT",
+    "last_name": "BAUER",
+    "phone": "7048989276",
+    "address": "602 NORTH DR",
+    "city": "CHERRYVILLE",
+    "county": "GASTON",
+    "zip_code": "28021"
+  },
+  {
+    "ncid": "BR268809",
+    "first_name": "KAIN",
+    "middle_name": "VON",
+    "last_name": "BROOKS",
+    "phone": "",
+    "address": "3413 GATEWOOD DR",
+    "city": "GASTONIA",
+    "county": "GASTON",
+    "zip_code": "28056"
+  },
+  {
+    "ncid": "BY818809",
+    "first_name": "KAIN",
+    "middle_name": "AIDAN",
+    "last_name": "HARRIS",
+    "phone": "",
+    "address": "7104 CHAFTAIN PL",
+    "city": "GREENSBORO",
+    "county": "GUILFORD",
+    "zip_code": "27410"
+  },
+  {
+    "ncid": "CA66352",
+    "first_name": "KAIN",
+    "middle_name": "H",
+    "last_name": "CRADDOCK",
+    "phone": "",
+    "address": "1160 PEACH FARM RD",
+    "city": "LILLINGTON",
+    "county": "HARNETT",
+    "zip_code": "27546"
+  },
+  {
+    "ncid": "CB94362",
+    "first_name": "KAIN",
+    "middle_name": "THORNE",
+    "last_name": "FORTNEY",
+    "phone": "",
+    "address": "941 BUNNY RUN RD",
+    "city": "CANTON",
+    "county": "HAYWOOD",
+    "zip_code": "28716"
+  },
+  {
+    "ncid": "CC175421",
+    "first_name": "KAIN",
+    "middle_name": "ANTHONY",
+    "last_name": "BEMESDERFER",
+    "phone": "3057335171",
+    "address": "39 NIX RD",
+    "city": "HENDERSONVILLE",
+    "county": "HENDERSON",
+    "zip_code": "28792"
+  },
+  {
+    "ncid": "CN110250",
+    "first_name": "KAIN",
+    "middle_name": "LOGAN",
+    "last_name": "KRUPA",
+    "phone": "",
+    "address": "3840 HIGHWAY 182",
+    "city": "LINCOLNTON",
+    "county": "LINCOLN",
+    "zip_code": "28092"
+  },
+  {
+    "ncid": "CN110279",
+    "first_name": "KAIN",
+    "middle_name": "ALLEN",
+    "last_name": "JUSTICE",
+    "phone": "7046483072",
+    "address": "6587 MCINTOSH RD",
+    "city": "STANLEY",
+    "county": "LINCOLN",
+    "zip_code": "28164"
+  },
+  {
+    "ncid": "CN110581",
+    "first_name": "KAIN",
+    "middle_name": "DAVID",
+    "last_name": "CASKEY",
+    "phone": "",
+    "address": "290 TRIPLE H LN",
+    "city": "LINCOLNTON",
+    "county": "LINCOLN",
+    "zip_code": "28092"
+  },
+  {
+    "ncid": "CW1478026",
+    "first_name": "KAIN",
+    "middle_name": "NGOC HOANG",
+    "last_name": "CHAU",
+    "phone": "",
+    "address": "4435 CADES COVE DR",
+    "city": "CHARLOTTE",
+    "county": "MECKLENBURG",
+    "zip_code": "28273"
+  },
+  {
+    "ncid": "CW1495319",
+    "first_name": "KAIN",
+    "middle_name": "ANDREW",
+    "last_name": "DUGGAN",
+    "phone": "",
+    "address": "2527 WINDSOR CHASE DR",
+    "city": "MATTHEWS",
+    "county": "MECKLENBURG",
+    "zip_code": "28105"
+  },
+  {
+    "ncid": "CW1527199",
+    "first_name": "KAIN",
+    "middle_name": "CORTEZ",
+    "last_name": "CEPHAS",
+    "phone": "2409350861",
+    "address": "8024 WHITEHALL EXECUTIVE CENTER DR #6304",
+    "city": "CHARLOTTE",
+    "county": "MECKLENBURG",
+    "zip_code": "28273"
+  },
+  {
+    "ncid": "CW1538712",
+    "first_name": "KAIN",
+    "middle_name": "MICHAEL",
+    "last_name": "CURRAN",
+    "phone": "",
+    "address": "823 CENTRAL AVE #3",
+    "city": "CHARLOTTE",
+    "county": "MECKLENBURG",
+    "zip_code": "28204"
+  },
+  {
+    "ncid": "CW1580631",
+    "first_name": "KAIN",
+    "middle_name": "",
+    "last_name": "RAHRAN",
+    "phone": "",
+    "address": "652 BLACKMON ST",
+    "city": "CHARLOTTE",
+    "county": "MECKLENBURG",
+    "zip_code": "28208"
+  },
+  {
+    "ncid": "CZ101156",
+    "first_name": "KAIN",
+    "middle_name": "MATTHEWS",
+    "last_name": "GODWIN",
+    "phone": "9109864182",
+    "address": "115 COTTAGE GROVE LN",
+    "city": "SEVEN LAKES",
+    "county": "MOORE",
+    "zip_code": "27376"
+  },
+  {
+    "ncid": "DA124504",
+    "first_name": "KAIN",
+    "middle_name": "JOHN D",
+    "last_name": "FLITTON",
+    "phone": "7327732008",
+    "address": "120 RUM BARRELL CV",
+    "city": "ROCKY MOUNT",
+    "county": "NASH",
+    "zip_code": "27804"
+  },
+  {
+    "ncid": "DB353655",
+    "first_name": "KAIN",
+    "middle_name": "CHRISTOPHER",
+    "last_name": "SASSEVILLE",
+    "phone": "6039370586",
+    "address": "804 SOUTHERN CHARM DR",
+    "city": "WILMINGTON",
+    "county": "NEW HANOVER",
+    "zip_code": "28412"
+  },
+  {
+    "ncid": "DD184763",
+    "first_name": "KAIN",
+    "middle_name": "W",
+    "last_name": "RUGG",
+    "phone": "2192212798",
+    "address": "237 MARIE ST",
+    "city": "JACKSONVILLE",
+    "county": "ONSLOW",
+    "zip_code": "28546"
+  },
+  {
+    "ncid": "DD217189",
+    "first_name": "KAIN",
+    "middle_name": "ALEXANDER",
+    "last_name": "DOLAN",
+    "phone": "9105456529",
+    "address": "2135 NORTH PARKER RD #1",
+    "city": "JACKSONVILLE",
+    "county": "ONSLOW",
+    "zip_code": "28546"
+  },
+  {
+    "ncid": "DD261046",
+    "first_name": "KAIN",
+    "middle_name": "ISAIAH",
+    "last_name": "DONAHOUE",
+    "phone": "9102659038",
+    "address": "105 TILLETT LN",
+    "city": "SNEADS FERRY",
+    "county": "ONSLOW",
+    "zip_code": "28460"
+  },
+  {
+    "ncid": "DS126819",
+    "first_name": "KAIN",
+    "middle_name": "MARCUS",
+    "last_name": "WITTRIG",
+    "phone": "7576859630",
+    "address": "806 LAWNDALE DR #15",
+    "city": "REIDSVILLE",
+    "county": "ROCKINGHAM",
+    "zip_code": "27320"
+  },
+  {
+    "ncid": "DT189789",
+    "first_name": "KAIN",
+    "middle_name": "RYAN",
+    "last_name": "LITTLETON",
+    "phone": "",
+    "address": "1248 GREENHEATHER DR",
+    "city": "SALISBURY",
+    "county": "ROWAN",
+    "zip_code": "28147"
+  },
+  {
+    "ncid": "DZ85684",
+    "first_name": "KAIN",
+    "middle_name": "WILLIAM",
+    "last_name": "GORDON",
+    "phone": "9806164564",
+    "address": "29281 COMMUNITY RD",
+    "city": "ALBEMARLE",
+    "county": "STANLY",
+    "zip_code": "28001"
+  },
+  {
+    "ncid": "EA61967",
+    "first_name": "KAIN",
+    "middle_name": "MARSHALL",
+    "last_name": "COOK",
+    "phone": "",
+    "address": "619 MOSER RD",
+    "city": "KING",
+    "county": "STOKES",
+    "zip_code": "27021"
+  },
+  {
+    "ncid": "EB83696",
+    "first_name": "KAIN",
+    "middle_name": "MICHAEL",
+    "last_name": "KISER",
+    "phone": "3364291700",
+    "address": "1312 CHANDLER RD",
+    "city": "DOBSON",
+    "county": "SURRY",
+    "zip_code": "27017"
+  },
+  {
+    "ncid": "EH1448891",
+    "first_name": "KAIN",
+    "middle_name": "ALAN",
+    "last_name": "MCCARGO",
+    "phone": "",
+    "address": "8440 LITTLE WOODY CT",
+    "city": "ZEBULON",
+    "county": "WAKE",
+    "zip_code": "27597"
+  },
+  {
+    "ncid": "EH885772",
+    "first_name": "KAIN",
+    "middle_name": "MATHIAS",
+    "last_name": "SCHENK",
+    "phone": "",
+    "address": "161 JACOB ST",
+    "city": "HOLLY SPRINGS",
+    "county": "HARNETT",
+    "zip_code": "27540"
+  }
+];
+
+function testSearchData(){
+  return testData;
+}
+
+export default testSearchData();

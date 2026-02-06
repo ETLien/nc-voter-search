@@ -10,7 +10,7 @@ function VoterDetail() {
         <h1>Firstname Lastname</h1>
 
         NCID: {ncid}
-        <div class="adjacent-tables">
+        <div className="adjacent-tables">
             <div>
                 <h2>Primaries Voting History</h2>
             </div>

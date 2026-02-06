@@ -225,9 +225,14 @@ app.get('/api/search', async (req, res) => {
             }
 
 
-            let query = "SELECT DISTINCT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address as address, res_city_desc AS city, county_desc as county, zip_code FROM public.nc_vreg_history WHERE ";
+            //let query = "SELECT DISTINCT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address as address, res_city_desc AS city, county_desc as county, zip_code FROM public.nc_vreg_history WHERE ";
+
+            let query = "SELECT DISTINCT on (ncid) ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code FROM public.nc_vreg_history WHERE ";
+
+            //let query = "SELECT DISTINCT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address as address, res_city_desc AS city, county_desc as county, zip_code, data_date FROM public.nc_vreg_latest WHERE ";
 
             //let query = "SELECT * FROM public.nc_vreg_latest WHERE ";
+         
 
             let first = true;
             for(key in queryParts){
@@ -244,6 +249,8 @@ app.get('/api/search', async (req, res) => {
                     }
                 }
             }
+
+            query += " ORDER BY ncid, data_date desc";
             
             console.log("Executing query: "+query);
             console.log("values:");

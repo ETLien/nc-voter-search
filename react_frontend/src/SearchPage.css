@@ -6,3 +6,12 @@
 .searchform > div {
   display: flex;    
 }
+
+#exact-warning {
+  display: none;
+  color: red;
+}
+
+#exact-warning.show {
+  display: block;
+}
