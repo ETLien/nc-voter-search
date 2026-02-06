@@ -234,7 +234,7 @@ app.get('/api/search', async (req, res) => {
             //let query = "SELECT DISTINCT on (ncid) ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code FROM public.nc_vreg_latest WHERE ";
             
             //don't need to use distinct with _latest view because there should only be one record per NCID:
-            let query = "SELECT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code FROM public.nc_vreg_latest WHERE ";
+            let query = "SELECT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code, data_date FROM public.nc_vreg_latest WHERE ";
             
          
             let first = true;
@@ -253,7 +253,8 @@ app.get('/api/search', async (req, res) => {
                 }
             }
 
-            query += " ORDER BY ncid, data_date desc";
+            //don't need to Order By when not using Distinct part of the query; will order via js on the front end later
+            //query += " ORDER BY ncid, data_date desc";
             
             console.log("Executing query: "+query);
             console.log("values:");

@@ -8,12 +8,7 @@
 }
 
 #exact-warning {
-  display: none;
   color: red;
-}
-
-#exact-warning.show {
-  display: block;
 }
 
 #county, #city {
