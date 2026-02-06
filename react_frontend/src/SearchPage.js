@@ -149,6 +149,9 @@ function SearchPage() {
   let queryDBForSearchResults = async (terms) => {
 
     //send search query to back end
+    fetch('http://localhost:8080/api/health')
+   .then(response => response.json())
+   .then(data => console.log(data));
 
     //return results
     return placeholderData;

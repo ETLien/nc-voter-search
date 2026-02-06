@@ -322,6 +322,17 @@ app.use((err, req, res, next) => {
 });
 
 
+// set CORS permissions wide open for now since proxy didn't work for react
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
+
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

@@ -1,10 +1,10 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import VoterDetail from './VoterDetail';
 import SearchPage from './SearchPage';
 
 function App() {
-  
+
   return (
     <BrowserRouter>
       <Routes>
