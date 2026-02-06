@@ -49,12 +49,14 @@ app.get('/api/health', (req, res) => {
     res.json({ uptime: process.uptime(), message: 'OK', timestamp: Date.now() });
 });
 
-app.get('/api/countylist', (req, res) => {
-    
+app.get('/api/countylist', async (req, res) => {
+    let query = "SELECT DISTINCT county_desc AS county FROM public.nc_vreg_latest";
+    const { rows } = await pgdb.query(query);
+    res.json(rows);
 });
 
 app.get('/api/citylist', (req, res) => {
-    const { county } = req.query;
+    const { county } = req.query || undefined;
 
     //optionally, use the county parameter to filter cities by county
     if(county != undefined){
@@ -224,16 +226,17 @@ app.get('/api/search', async (req, res) => {
                 queryValues.push(zip);
             }
 
+            //public.nc_vreg_history has every single record for every time a voter has registered anything with the state's voter registry
+            //let query = "SELECT DISTINCT on (ncid) ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code FROM public.nc_vreg_history WHERE ";
 
-            //let query = "SELECT DISTINCT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address as address, res_city_desc AS city, county_desc as county, zip_code FROM public.nc_vreg_history WHERE ";
-
-            let query = "SELECT DISTINCT on (ncid) ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code FROM public.nc_vreg_history WHERE ";
-
-            //let query = "SELECT DISTINCT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address as address, res_city_desc AS city, county_desc as county, zip_code, data_date FROM public.nc_vreg_latest WHERE ";
-
-            //let query = "SELECT * FROM public.nc_vreg_latest WHERE ";
+            //public.nc_vreg_history is a veiw showing only the lastest information from a voter's most recent registration (ie, latest name, addresss, etc)
+            //let query = "SELECT * FROM public.nc_vreg_latest WHERE ";        
+            //let query = "SELECT DISTINCT on (ncid) ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code FROM public.nc_vreg_latest WHERE ";
+            
+            //don't need to use distinct with _latest view because there should only be one record per NCID:
+            let query = "SELECT ncid, first_name, middle_name, last_name, full_phone_number AS phone, res_street_address AS address, res_city_desc AS city, county_desc AS county, zip_code FROM public.nc_vreg_latest WHERE ";
+            
          
-
             let first = true;
             for(key in queryParts){
 

@@ -15,3 +15,7 @@
 #exact-warning.show {
   display: block;
 }
+
+#county, #city {
+  text-transform: capitalize;
+}

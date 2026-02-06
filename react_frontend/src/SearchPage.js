@@ -1,8 +1,15 @@
 import './SearchPage.css';
 import React from 'react';
 import {default as placeholderData} from './test-search.js';
+import {default as countyData} from './countyData.js';
+import {default as cityDataAll} from './cityData.js';
 
 function SearchResultsTable({searchData}) {
+
+    console.log("the search data used in table:");
+    console.log(searchData);
+
+
     return(
     <table>
         <thead>
@@ -17,6 +24,7 @@ function SearchResultsTable({searchData}) {
             <th>ZIP</th>
         </tr>
         </thead>
+        <tbody>
         {searchData.map((voter) => {
         return (<tr key={voter.ncid}><td>{voter.firstname}</td>
             <td></td>
@@ -28,6 +36,7 @@ function SearchResultsTable({searchData}) {
             <td></td>
         </tr>)
         })}
+        </tbody>
     </table>
     );
 }
@@ -35,24 +44,67 @@ function SearchResultsTable({searchData}) {
 
 function SearchPage() {
 
+  const [cityData, setCityData] = React.useState(cityDataAll); //todo: allow filter by county
   const [searchResultData, setSearchResultData] = React.useState([]);
   const [showResults, setshowResults] = React.useState(false);
 
+  const initialFormData = {
+    firstname: "",
+    firstnameExact: true,
+    middlename: "",
+    middlenameExact: true,
+    lastname: "",
+    lastnameExact: true,
+    phone: "",
+    address: "",
+    city: "",
+    county: "",
+    zip: ""
+  };
+
+  const [formData, setFormData] = React.useState(initialFormData);
+
+  const handleChange = (e) => {
+    let id = e.target.id;
+    let value = e.target.value;   
+
+    let newFormData ={...formData};
+    newFormData[id]=value;
+    
+    setFormData(newFormData);
+  };
+
+
+  /* Filter the available list of cities by the selected county */
+  let handleCountySelect = (e) => {
+    let county = e.target.value;
+    if(county == undefined || county===""){
+        setCityData(cityDataAll);
+    }
+    else {
+        let tempCityArray = cityDataAll.filter((city) => city.county === county);
+        setCityData(tempCityArray);
+    }
+
+
+    //todo: handle if selected city is no longer in the dropdown list after filtering by county
+  }
+
+
   let handleSearch = async (e) => {
     e.preventDefault(); // Prevents page reload
-    alert("Search triggered");
-
-
-    console.log("showResults at the beginning of the event handler: "+showResults);
 
     //show loading indicator
 
     //get values from form
+    let terms = [];
+
 
     //check for any issues before sending
 
+
     //query database
-    let terms = [];
+    
     let result = await queryDBForSearchResults(terms);
     setSearchResultData(result);
 
@@ -71,7 +123,6 @@ function SearchPage() {
     //return results
     return placeholderData;
   }
-
 
   return (
     <div>
@@ -102,19 +153,50 @@ function SearchPage() {
 
           <div>
             <label htmlFor ="phone">Phone Number</label>
-            <input id="phone"></input>
+            <input
+                name="phone"
+                id="phone"
+                type="tel"
+                placeholder="phone number"
+                value={formData.phone}
+                onChange={handleChange}
+            />
 
             <label htmlFor ="address">Street Address</label>
-            <input id="address"></input>
+            <input
+                name="address"
+                id="address"
+                type="text"
+                placeholder="street address"
+                value={formData.address}
+                onChange={handleChange}
+            />
 
             <label htmlFor ="zip">Zip Code</label>
-            <input id="zip"></input>
+            <input
+                name="zip"
+                id="zip"
+                type="number"
+                placeholder="zip code"
+                value={formData.zip}
+                onChange={handleChange}
+            />
 
             <label htmlFor ="county">County</label>
-            <select id="county"></select>
+            <select id="county" onChange={handleCountySelect}>
+                <option key="0" value=""></option>
+                {countyData.map((county) => {
+                    return (<option key={county.county} value={county.county}>{county.county.toLowerCase()}</option>)
+                })}
+            </select>
 
             <label htmlFor ="city">City</label>
-            <select id="city"></select>
+            <select id="city">
+                <option key="0" value=""></option>
+                {cityData.map((city) => {
+                    return (<option key={city.city} value={city.city}>{city.city.toLowerCase()}</option>)
+                })}
+            </select>
 
             <button type="submit" >Search</button>
           </div>
