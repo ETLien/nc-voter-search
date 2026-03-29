@@ -125,18 +125,24 @@ function SearchPage() {
 
     //show loading indicator
 
-    //get values from form
-    let terms = [];
-
-    console.log(formData);
-
 
     //check for any issues before sending
+    console.log(formData);
+
+    
+    //query database   
+    /* 
+    let result = await queryDBForSearchResults(formData);
+    console.log("checkpoint right after setting result of db query in handleSearch");
+    */
+
+    await queryDBForSearchResults(formData).then((result) => {
+        console.log("got this data from the db:");
+        console.log(result);
+    });
 
 
-    //query database    
-    let result = await queryDBForSearchResults(terms);
-    setSearchResultData(result);
+    //setSearchResultData(result);
 
 
     //remove loading indicator
@@ -148,10 +154,27 @@ function SearchPage() {
 
   let queryDBForSearchResults = async (terms) => {
 
+    console.log("in queryDBForSearchResults, here are the terms to use:");
+    console.log(terms)
+
+    //console.log("beginning database fetch");
+
+    let result = [];
+
     //send search query to back end
-    fetch('http://localhost:8080/api/health')
+    await fetch('http://localhost:3000/api/search?firstname=Cally&firstnameExact=true')
    .then(response => response.json())
-   .then(data => console.log(data));
+   .then(data => {
+        console.log("database fetch complete");
+        console.log(data);
+        result = data;
+
+        //todo: handle errors from back end
+
+        return result;
+    });
+
+    console.log(placeholderData);
 
     //return results
     return placeholderData;

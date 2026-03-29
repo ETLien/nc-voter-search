@@ -67,7 +67,20 @@ app.get('/api/citylist', (req, res) => {
     }    
 });
 
-app.get('/api/search', async (req, res) => {
+app.get('/api/search', async (req, res, next) => {
+
+
+
+    
+    // set CORS permissions wide open for now since proxy didn't work for react
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+
+
+
     
     const { firstname, firstnameExact, middlename, middlenameExact, lastname, lastnameExact, address, phone, city, county, zip } = req.query;
 
@@ -294,24 +307,6 @@ app.get('/api/voterregistration', async (req, res) => {
 });
 
 
-/*
-app.get("/test", async (req, res) => {
-  try {
-    const query = "SELECT COUNT(*) as nc_vreg_history_count FROM public.nc_vreg_history";
-
-    console.log("Executing query:", query);
-
-    const { rows } = await pgdb.query(query);
-    res.json(rows)
-  }
-  catch (err) {
-    console.error(err)
-    res.status(500).json({ error: "Internal server error" })
-  } 
-});
-*/
-
-
 // 404 handler
 app.use((req, res) => res.status(404).json({ error: 'Not Found' }));
 
@@ -320,17 +315,6 @@ app.use((err, req, res, next) => {
     console.error(err);
     res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
 });
-
-
-// set CORS permissions wide open for now since proxy didn't work for react
-app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
-
 
 
 // Start the server
