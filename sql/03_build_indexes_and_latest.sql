@@ -48,12 +48,15 @@ DROP MATERIALIZED VIEW IF EXISTS public.nc_vreg_latest;
 CREATE MATERIALIZED VIEW public.nc_vreg_latest AS
 SELECT DISTINCT ON (ncid)
   ncid,
-  county_desc,
+  data_date,
   last_name,
   first_name,
   middle_name,
+  county_desc,
+  zip_code,
   res_city_desc,
-  data_date
+  res_street_address,
+  full_phone_number
 FROM public.nc_vreg_history
 WHERE ncid IS NOT NULL AND ncid <> ''
 ORDER BY ncid, data_date DESC;
